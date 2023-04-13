@@ -9,5 +9,9 @@ export const config = {
     url: process.env.DATABASE_URL || 'file:./database/db.local.sqlite',
     port: process.env.DATABASE_PORT,
     host: process.env.DATABASE_HOST,
+  },
+  jsonwebtoken: {
+    key: process.env.JSONWEBTOKEN_KEY,
+    ttl: process.env.JSONWEBTOKEN_TTL,
   }
 };
