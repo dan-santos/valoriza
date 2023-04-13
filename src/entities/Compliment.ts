@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 class Compliment {
   readonly id: string;
   message: string;
-  senderId: string;
-  receiverId: boolean;
-  tagId: string;
+  user_sender: string; // is ID
+  user_receiver: string; // is ID
+  tag_id: string;
   created_at: Date;
   updated_at: Date;
 
@@ -18,4 +18,4 @@ class Compliment {
   }
 }
 
-export { Compliment }
+export { Compliment };

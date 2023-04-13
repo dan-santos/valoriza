@@ -18,7 +18,7 @@ class UsersRepository implements IUserRepository {
     });
   }
 
-  find(take?: number): Promise<User[]> {
+  get(take?: number): Promise<User[]> {
     if(take){
       return client.user.findMany({take: take});
     }
@@ -30,6 +30,16 @@ class UsersRepository implements IUserRepository {
       where: {
         email: {
           equals: email
+        },
+      },
+    });
+  }
+
+  findById(id: string): Promise<User> {
+    return client.user.findFirst({
+      where: {
+        id: {
+          equals: id
         },
       },
     });
