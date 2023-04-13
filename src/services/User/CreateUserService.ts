@@ -5,6 +5,7 @@ interface IUserRequestDTO {
   name: string;
   email: string;
   admin?: boolean;
+  password: string;
 }
 
 class CreateUserService {
@@ -13,7 +14,7 @@ class CreateUserService {
     private usersRepository: IUserRepository
   ){}
 
-  async execute({ name, email, admin }: IUserRequestDTO) {    
+  async execute({ name, email, admin, password }: IUserRequestDTO) {    
     if(!email) throw new BadRequestError('Empty email value');
     
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
@@ -22,7 +23,8 @@ class CreateUserService {
     const user = this.usersRepository.create({
       name,
       email,
-      admin
+      admin,
+      password
     });
 
     await this.usersRepository.save(user);

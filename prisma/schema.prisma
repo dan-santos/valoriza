@@ -15,6 +15,7 @@ model User {
   name         String
   email        String       @unique
   admin        Boolean      @default(false)
+  password     String       @default("")
   created_at   DateTime     @default(now())
   updated_at   DateTime     @default(now())
   compliment_r Compliment[] @relation(name: "receiver")

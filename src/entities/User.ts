@@ -5,6 +5,7 @@ class User {
   name: string;
   email: string;
   admin: boolean;
+  password: string;
   created_at: Date;
   updated_at: Date;
 
