@@ -20,3 +20,31 @@
   [x] Não é permitido cadastrar elogios para usuários inválidos ou inexistentes
 
   [x] O usuário precisa estar autenticado na aplicação
+
+## Refatoração
+  
+  [ ] CRUD de Tags
+
+  [ ] CRUD de Users
+
+  [ ] CRUD de Compliments
+
+  [ ] Somente Admins podem criar, deletar ou editar tags
+
+  [ ] Somente usuários autores (senders) de compliments podem deletar ou editar elas
+
+  [ ] Users podem ser deletados ou editados por admins ou por eles próprios
+
+  [ ] Rota para tornar um usuário comum em admin
+
+  [ ] Rota para tornar um admin em usuário normal
+
+  [ ] Testes com vitest
+
+  [ ] Logger para requisições
+
+  [ ] Ocultar senha de usuários nas respostas do servidor
+
+  [ ] Mudar SQLite para postgres
+
+  [ ] Subir na nuvem
