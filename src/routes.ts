@@ -12,12 +12,13 @@ const tagController = new TagController();
 const complimentController = new ComplimentController();
 
 router.post('/users', userController.create);
+router.get('/users', ensureAuthenticated, ensureAdmin, userController.get);
 router.post('/login', userController.auth);
 
 router.post('/tags', ensureAuthenticated, ensureAdmin, tagController.create);
+router.get('/tags', ensureAuthenticated, tagController.get);
 
 router.post('/compliments', ensureAuthenticated, complimentController.create);
-
-console.log(`Successfully registered all ${router.length+1} application routes!`);
+router.get('/users/compliments', ensureAuthenticated, complimentController.listByUser);
 
 export { router };

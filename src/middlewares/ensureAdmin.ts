@@ -12,7 +12,7 @@ export async function ensureAdmin(req: Request, res: Response, next: NextFunctio
 
   const { admin } = await findUserService.execute({ id: user_id });
 
-  if (!admin) return res.status(403).json('User not enough privileges to create a tag');
+  if (!admin) return res.status(403).json('User not enough privileges');
 
   return next();
 }

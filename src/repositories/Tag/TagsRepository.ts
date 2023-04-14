@@ -18,7 +18,7 @@ class TagsRepository implements ITagRepository {
     });
   }
 
-  find(take?: number): Promise<Tag[]> {
+  get(take?: number): Promise<Tag[]> {
     if(take){
       return client.tag.findMany({take: take});
     }

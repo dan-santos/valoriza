@@ -18,20 +18,36 @@ class ComplimentsRepository implements IComplimentRepository {
     });
   }
 
-  find(take?: number): Promise<Compliment[]> {
+  get(take?: number): Promise<Compliment[]> {
     if(take){
       return client.compliment.findMany({take: take});
     }
     return client.compliment.findMany();
   }
   
-  findById(id: string): Promise<Compliment>{
+  findById(id: string): Promise<Compliment> {
     return client.compliment.findFirst({
       where: {
         id: {
           equals: id
         },
       },
+    });
+  }
+
+  findByReceiver(user_id: string): Promise<Compliment[]> {
+    return client.compliment.findMany({
+      where: {
+        user_receiver: user_id
+      },
+    });
+  }
+
+  findBySender(user_id: string): Promise<Compliment[]> {
+    return client.compliment.findMany({
+      where: {
+        user_sender: user_id
+      }
     });
   }
 }
