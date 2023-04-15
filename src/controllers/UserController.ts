@@ -3,6 +3,7 @@ import { UsersRepository } from '../repositories/User/UsersRepository';
 import { AuthenticateUserService } from '../services/User/AuthenticateUserService';
 import { CreateUserService } from '../services/User/CreateUserService';
 import { GetUsersService } from '../services/User/GetUsersService';
+import { CustomError } from '../utils/CustomErrors';
 
 const usersRepository = new UsersRepository();
 
@@ -12,9 +13,14 @@ export class UserController {
 
     const userService = new CreateUserService(usersRepository);
 
-    const user = await userService.execute({ name, email, admin, password });
-
-    return res.status(200).json(user);
+    try {
+      const user = await userService.execute({ name, email, admin, password });
+  
+      return res.status(200).json(user);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 
   async auth(req: Request, res: Response) {
@@ -22,12 +28,17 @@ export class UserController {
 
     const authUserService = new AuthenticateUserService(usersRepository);
 
-    const token = await authUserService.execute({
-      email,
-      password
-    });
-
-    return res.status(200).json(token);
+    try {
+      const token = await authUserService.execute({
+        email,
+        password
+      });
+  
+      return res.status(200).json(token);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 
   async get(req: Request, res: Response) {

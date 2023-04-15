@@ -5,6 +5,7 @@ import { UsersRepository } from '../repositories/User/UsersRepository';
 import { CreateComplimentService } from '../services/Compliment/CreateComplimentService';
 import { ListUserReceiveComplimentsService } from '../services/Compliment/ListUserReceiveComplimentsService';
 import { ListUserSendComplimentsService } from '../services/Compliment/ListUserSendComplimentsService';
+import { CustomError } from '../utils/CustomErrors';
 
 const complimentsRepository = new ComplimentsRepository();
 const usersRepository = new UsersRepository();
@@ -18,14 +19,19 @@ export class ComplimentController {
       usersRepository
     );
 
-    const compliment = await complimentService.execute({ 
-      tag_id, 
-      user_sender: req.user_id, 
-      user_receiver, 
-      message 
-    });
+    try {
+      const compliment = await complimentService.execute({ 
+        tag_id, 
+        user_sender: req.user_id, 
+        user_receiver, 
+        message 
+      });
+      return res.status(200).json(compliment);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
 
-    return res.status(200).json(compliment);
   }
 
   async listByUser(req: Request, res: Response) {

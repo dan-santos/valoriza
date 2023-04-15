@@ -4,6 +4,7 @@ import { TagsRepository } from '../repositories/Tag/TagsRepository';
 import { CreateTagService } from '../services/Tag/CreateTagService';
 import { GetTagsService } from '../services/Tag/GetTagsService';
 import { UpdateTagService } from '../services/Tag/UpdateTagService';
+import { CustomError } from '../utils/CustomErrors';
 
 const tagsRepository = new TagsRepository();
 
@@ -13,9 +14,14 @@ export class TagController {
 
     const tagService = new CreateTagService(tagsRepository);
 
-    const tag = await tagService.execute({ name });
-
-    return res.status(200).json(tag);
+    try {
+      const tag = await tagService.execute({ name });
+  
+      return res.status(200).json(tag);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 
   async get(req: Request, res: Response) {
