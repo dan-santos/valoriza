@@ -6,4 +6,5 @@ export interface ITagRepository {
   create(tag: Partial<Tag>): Tag;
   save(tag: Tag): Promise<Tag>;
   update(tag: Partial<Tag>): Promise<Tag>;
+  delete(id: string): Promise<Tag>;
 }

@@ -45,6 +45,14 @@ class TagsRepository implements ITagRepository {
       data: tag
     });
   }
+
+  delete(id: string): Promise<Tag> {
+    return client.tag.delete({
+      where: {
+        id: id
+      }
+    });
+  }
 }
 
 export { TagsRepository };

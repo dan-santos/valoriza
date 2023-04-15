@@ -18,6 +18,7 @@ router.post('/login', userController.auth);
 router.post('/tags', ensureAuthenticated, ensureAdmin, tagController.create);
 router.get('/tags', ensureAuthenticated, tagController.get);
 router.put('/tags/:id', ensureAuthenticated, ensureAdmin, tagController.update);
+router.delete('/tags/:id', ensureAuthenticated, ensureAdmin, tagController.delete);
 
 router.post('/compliments', ensureAuthenticated, complimentController.create);
 router.get('/users/compliments', ensureAuthenticated, complimentController.listByUser);

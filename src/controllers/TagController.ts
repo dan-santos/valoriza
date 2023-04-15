@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { TagsRepository } from '../repositories/Tag/TagsRepository';
 import { CreateTagService } from '../services/Tag/CreateTagService';
+import { DeleteTagService } from '../services/Tag/DeleteTagService';
 import { GetTagsService } from '../services/Tag/GetTagsService';
 import { UpdateTagService } from '../services/Tag/UpdateTagService';
 import { CustomError } from '../utils/CustomErrors';
@@ -47,5 +48,18 @@ export class TagController {
     if (!updatedTag) return res.status(404).json('Tag doesnt exist');
 
     return res.status(200).json(updatedTag);
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    
+    if(!id) return res.status(400).json('Empty tag id value');
+    
+    const tagService = new DeleteTagService(tagsRepository);
+    
+    const deletedTag = await tagService.execute(id);
+    if (!deletedTag) return res.status(404).json('Tag doesnt exist');
+
+    return res.status(200).json(deletedTag);
   }
 }
