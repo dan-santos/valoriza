@@ -37,6 +37,8 @@
 
   [x] Usuários devem ser por padrão criados com o admin=false
 
+  [ ] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
+
   [ ] Testes com vitest
 
   [ ] Logger para requisições

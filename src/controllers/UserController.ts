@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UsersRepository } from '../repositories/User/UsersRepository';
 import { AuthenticateUserService } from '../services/User/AuthenticateUserService';
 import { CreateUserService } from '../services/User/CreateUserService';
+import { DeleteUserService } from '../services/User/DeleteUserService';
 import { GetUsersService } from '../services/User/GetUsersService';
 import { UpdateUserService } from '../services/User/UpdateUserService';
 import { CustomError } from '../utils/CustomErrors';
@@ -67,5 +68,18 @@ export class UserController {
     if (!updatedUser) return res.status(404).json('User doesnt exist');
 
     return res.status(200).json(updatedUser);
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    
+    if(!id) return res.status(400).json('Empty user id value');
+    
+    const userService = new DeleteUserService(usersRepository);
+    
+    const deletedUser = await userService.execute(id);
+    if (!deletedUser) return res.status(404).json('User doesnt exist');
+
+    return res.status(200).json(deletedUser);
   }
 }

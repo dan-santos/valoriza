@@ -56,6 +56,13 @@ class UsersRepository implements IUserRepository {
       data: user
     });
   }
+  delete(id: string): Promise<User> {
+    return client.user.delete({
+      where: {
+        id: id
+      }
+    });
+  }
 }
 
 export { UsersRepository };
