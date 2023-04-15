@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { ComplimentsRepository } from '../repositories/Compliment/ComplimentsRepository';
 import { UsersRepository } from '../repositories/User/UsersRepository';
 import { CreateComplimentService } from '../services/Compliment/CreateComplimentService';
+import { GetComplimentsService } from '../services/Compliment/GetComplimentsService';
 import { ListUserReceiveComplimentsService } from '../services/Compliment/ListUserReceiveComplimentsService';
 import { ListUserSendComplimentsService } from '../services/Compliment/ListUserSendComplimentsService';
 import { CustomError } from '../utils/CustomErrors';
@@ -47,4 +48,15 @@ export class ComplimentController {
       'sent': complimentsSent
     });
   } 
+
+  async get(req: Request, res: Response) {
+    const takeParam = req.query.take ?? null;
+    const take = parseInt(takeParam as string);
+
+    const complimentService = new GetComplimentsService(complimentsRepository);
+
+    const compliments = await complimentService.execute({ take });
+
+    return res.status(200).json(compliments);
+  }
 }

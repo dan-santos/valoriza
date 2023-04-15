@@ -25,26 +25,26 @@
   
   [x] CRUD de Tags
 
-  [-] CRUD de Users
+  [x] CRUD de Users
 
-  [ ] CRUD de Compliments
+  [-] CRUD de Compliments
 
   [x] Somente Admins podem criar, deletar ou editar tags
 
   [ ] Somente usuários autores (senders) de compliments podem deletar ou editar elas
 
-  [-] Users podem ser deletados ou editados por admins ou por eles próprios
+  [ ] Users podem ser deletados ou editados por admins ou por eles próprios
 
   [x] Usuários devem ser por padrão criados com o admin=false
 
   [ ] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
 
+  [ ] Mudar SQLite para postgres
+  
   [ ] Testes com vitest
 
   [ ] Logger para requisições
 
   [ ] Ocultar senha de usuários nas respostas do servidor
-
-  [ ] Mudar SQLite para postgres
 
   [ ] Subir na nuvem
