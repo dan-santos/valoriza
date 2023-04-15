@@ -34,6 +34,17 @@ class TagsRepository implements ITagRepository {
       },
     });
   }
+
+  update(tag: Partial<Tag>): Promise<Tag> {
+    tag.updated_at = new Date();
+
+    return client.tag.update({
+      where: {
+        id: tag.id
+      },
+      data: tag
+    });
+  }
 }
 
 export { TagsRepository };

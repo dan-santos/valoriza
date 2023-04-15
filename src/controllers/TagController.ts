@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { TagsRepository } from '../repositories/Tag/TagsRepository';
 import { CreateTagService } from '../services/Tag/CreateTagService';
 import { GetTagsService } from '../services/Tag/GetTagsService';
+import { UpdateTagService } from '../services/Tag/UpdateTagService';
 
 const tagsRepository = new TagsRepository();
 
@@ -26,5 +27,19 @@ export class TagController {
     const tags = await tagService.execute({ take });
 
     return res.status(200).json(tags);
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name } = req.body;
+    
+    if(!name || !id) return res.status(400).json('Empty tag name or id value');
+    
+    const tagService = new UpdateTagService(tagsRepository);
+    
+    const updatedTag = await tagService.execute({ id, name });
+    if (!updatedTag) return res.status(404).json('Tag doesnt exist');
+
+    return res.status(200).json(updatedTag);
   }
 }

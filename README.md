@@ -23,7 +23,7 @@
 
 ## Refatoração
   
-  [ ] CRUD de Tags
+  [-] CRUD de Tags
 
   [ ] CRUD de Users
 
