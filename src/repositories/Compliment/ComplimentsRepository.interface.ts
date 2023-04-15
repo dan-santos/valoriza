@@ -7,4 +7,5 @@ export interface IComplimentRepository {
   get(take?: number): Promise<Compliment[]>;
   create(compliment: Partial<Compliment>): Compliment;
   save(compliment: Compliment): Promise<Compliment>;
+  update(compliment: Partial<Compliment>): Promise<Compliment>;
 }

@@ -50,6 +50,17 @@ class ComplimentsRepository implements IComplimentRepository {
       }
     });
   }
+  
+  update(compliment: Partial<Compliment>): Promise<Compliment> {
+    compliment.updated_at = new Date();
+
+    return client.compliment.update({
+      where: {
+        id: compliment.id
+      },
+      data: compliment
+    });
+  }
 }
 
 export { ComplimentsRepository };

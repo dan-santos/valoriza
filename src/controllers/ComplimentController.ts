@@ -1,15 +1,18 @@
 
 import { Request, Response } from 'express';
 import { ComplimentsRepository } from '../repositories/Compliment/ComplimentsRepository';
+import { TagsRepository } from '../repositories/Tag/TagsRepository';
 import { UsersRepository } from '../repositories/User/UsersRepository';
 import { CreateComplimentService } from '../services/Compliment/CreateComplimentService';
 import { GetComplimentsService } from '../services/Compliment/GetComplimentsService';
 import { ListUserReceiveComplimentsService } from '../services/Compliment/ListUserReceiveComplimentsService';
 import { ListUserSendComplimentsService } from '../services/Compliment/ListUserSendComplimentsService';
+import { UpdateComplimentService } from '../services/Compliment/UpdateComplimentService';
 import { CustomError } from '../utils/CustomErrors';
 
 const complimentsRepository = new ComplimentsRepository();
 const usersRepository = new UsersRepository();
+const tagsRepository = new TagsRepository();
 
 export class ComplimentController {
   async create(req: Request, res: Response) {
@@ -58,5 +61,20 @@ export class ComplimentController {
     const compliments = await complimentService.execute({ take });
 
     return res.status(200).json(compliments);
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { user_id } = req;
+    const { tag_id, message } = req.body;
+    
+    if(!tag_id || !id || !message) return res.status(400).json('Empty compliment tag, message or id value');
+    
+    const complimentService = new UpdateComplimentService(complimentsRepository, tagsRepository);
+    
+    const updatedCompliment = await complimentService.execute({ id, tag_id, message, user_id });
+    if (!updatedCompliment) return res.status(404).json('Compliment doesnt exist');
+
+    return res.status(200).json(updatedCompliment);
   }
 }

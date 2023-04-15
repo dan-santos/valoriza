@@ -24,6 +24,7 @@ router.delete('/tags/:id', ensureAuthenticated, ensureAdmin, tagController.delet
 
 router.post('/compliments', ensureAuthenticated, complimentController.create);
 router.get('/compliments', ensureAuthenticated, complimentController.get);
+router.put('/compliments/:id', ensureAuthenticated, complimentController.update);
 router.get('/users/compliments', ensureAuthenticated, complimentController.listByUser);
 
 export { router };
