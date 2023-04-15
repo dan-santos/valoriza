@@ -12,6 +12,7 @@ class UsersRepository implements IUserRepository {
       updated_at: new Date()
     });
   }
+
   save(user: User): Promise<User> {
     return client.user.create({
       data: user
@@ -42,6 +43,17 @@ class UsersRepository implements IUserRepository {
           equals: id
         },
       },
+    });
+  }
+
+  update(user: Partial<User>): Promise<User> {
+    user.updated_at = new Date();
+
+    return client.user.update({
+      where: {
+        id: user.id
+      },
+      data: user
     });
   }
 }

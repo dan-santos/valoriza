@@ -13,6 +13,7 @@ const complimentController = new ComplimentController();
 
 router.post('/users', userController.create);
 router.get('/users', ensureAuthenticated, ensureAdmin, userController.get);
+router.put('/users/:id', ensureAuthenticated, ensureAdmin, userController.update);
 router.post('/login', userController.auth);
 
 router.post('/tags', ensureAuthenticated, ensureAdmin, tagController.create);

@@ -23,21 +23,19 @@
 
 ## Refatoração
   
-  [-] CRUD de Tags
+  [x] CRUD de Tags
 
-  [ ] CRUD de Users
+  [-] CRUD de Users
 
   [ ] CRUD de Compliments
 
-  [ ] Somente Admins podem criar, deletar ou editar tags
+  [x] Somente Admins podem criar, deletar ou editar tags
 
   [ ] Somente usuários autores (senders) de compliments podem deletar ou editar elas
 
-  [ ] Users podem ser deletados ou editados por admins ou por eles próprios
+  [-] Users podem ser deletados ou editados por admins ou por eles próprios
 
-  [ ] Rota para tornar um usuário comum em admin
-
-  [ ] Rota para tornar um admin em usuário normal
+  [x] Usuários devem ser por padrão criados com o admin=false
 
   [ ] Testes com vitest
 

@@ -3,18 +3,19 @@ import { UsersRepository } from '../repositories/User/UsersRepository';
 import { AuthenticateUserService } from '../services/User/AuthenticateUserService';
 import { CreateUserService } from '../services/User/CreateUserService';
 import { GetUsersService } from '../services/User/GetUsersService';
+import { UpdateUserService } from '../services/User/UpdateUserService';
 import { CustomError } from '../utils/CustomErrors';
 
 const usersRepository = new UsersRepository();
 
 export class UserController {
   async create(req: Request, res: Response) {
-    const { name, email, admin, password } = req.body;
+    const { name, email, password } = req.body;
 
     const userService = new CreateUserService(usersRepository);
 
     try {
-      const user = await userService.execute({ name, email, admin, password });
+      const user = await userService.execute({ name, email, password });
   
       return res.status(200).json(user);
     } catch (e) {
@@ -50,5 +51,21 @@ export class UserController {
     const users = await userService.execute({ take });
 
     return res.status(200).json(users);
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name, email, admin } = req.body;
+    
+    if(!name || !id || !email || !(typeof admin === 'boolean')) {
+      return res.status(400).json('Empty user name, email, admin or id value');
+    }
+    
+    const userService = new UpdateUserService(usersRepository);
+    
+    const updatedUser = await userService.execute({ id, name, email, admin });
+    if (!updatedUser) return res.status(404).json('User doesnt exist');
+
+    return res.status(200).json(updatedUser);
   }
 }
