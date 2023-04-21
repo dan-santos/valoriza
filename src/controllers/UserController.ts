@@ -71,15 +71,21 @@ export class UserController {
   }
 
   async delete(req: Request, res: Response) {
+    const { user_id } = req;
     const { id } = req.params;
     
-    if(!id) return res.status(400).json('Empty user id value');
+    if(!id || !user_id) return res.status(400).json('Empty user id or user_id value');
     
     const userService = new DeleteUserService(usersRepository);
     
-    const deletedUser = await userService.execute(id);
-    if (!deletedUser) return res.status(404).json('User doesnt exist');
-
-    return res.status(200).json(deletedUser);
+    try {
+      const deletedUser = await userService.execute({ id, user_id });
+      if (!deletedUser) return res.status(404).json('User doesnt exist');
+  
+      return res.status(200).json(deletedUser);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 }
