@@ -27,13 +27,13 @@
 
   [x] CRUD de Users
 
-  [-] CRUD de Compliments
+  [x] CRUD de Compliments
 
   [x] Somente Admins podem criar, deletar ou editar tags
 
-  [ ] Somente usuários autores (senders) de compliments podem deletar ou editar elas
+  [x] Somente usuários autores (senders) de compliments podem deletar ou editar elas
 
-  [ ] Users podem ser deletados ou editados por admins ou por eles próprios
+  [-] Users podem ser deletados ou editados por admins ou por eles próprios
 
   [x] Usuários devem ser por padrão criados com o admin=false
 

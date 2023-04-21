@@ -34,6 +34,13 @@ class TagsRepository implements ITagRepository {
       },
     });
   }
+  findById(id: string): Promise<Tag> {
+    return client.tag.findFirst({
+      where: {
+        id: id,
+      },
+    });
+  }
 
   update(tag: Partial<Tag>): Promise<Tag> {
     tag.updated_at = new Date();

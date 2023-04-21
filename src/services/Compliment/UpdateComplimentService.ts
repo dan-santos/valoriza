@@ -20,9 +20,9 @@ class UpdateComplimentService {
 
     const { user_sender } = await this.complimentsRepository.findById(id);
 
-    if (user_sender !== user_id) throw new ForbiddenError('You cannot updated a compliment that you arent author');
+    if (user_sender !== user_id) throw new ForbiddenError('You cannot update a compliment that you arent author');
 
-    const refferedTag = await this.tagsRepository.findByName(tag_id); // TODO: the query should be byId, not ByName
+    const refferedTag = await this.tagsRepository.findById(tag_id);
 
     if (!refferedTag) throw new BadRequestError('The reffered tag doesnt exists');
 

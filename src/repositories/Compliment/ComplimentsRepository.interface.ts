@@ -8,4 +8,5 @@ export interface IComplimentRepository {
   create(compliment: Partial<Compliment>): Compliment;
   save(compliment: Compliment): Promise<Compliment>;
   update(compliment: Partial<Compliment>): Promise<Compliment>;
+  delete(id: string): Promise<Compliment>;
 }

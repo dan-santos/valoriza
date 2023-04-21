@@ -12,6 +12,7 @@ class ComplimentsRepository implements IComplimentRepository {
       updated_at: new Date()
     });
   }
+
   save(compliment: Compliment): Promise<Compliment> {
     return client.compliment.create({
       data: compliment
@@ -59,6 +60,14 @@ class ComplimentsRepository implements IComplimentRepository {
         id: compliment.id
       },
       data: compliment
+    });
+  }
+
+  delete(id: string): Promise<Compliment> {
+    return client.compliment.delete({
+      where: {
+        id: id
+      }
     });
   }
 }

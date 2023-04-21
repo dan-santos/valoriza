@@ -4,6 +4,7 @@ import { ComplimentsRepository } from '../repositories/Compliment/ComplimentsRep
 import { TagsRepository } from '../repositories/Tag/TagsRepository';
 import { UsersRepository } from '../repositories/User/UsersRepository';
 import { CreateComplimentService } from '../services/Compliment/CreateComplimentService';
+import { DeleteComplimentService } from '../services/Compliment/DeleteComplimentService';
 import { GetComplimentsService } from '../services/Compliment/GetComplimentsService';
 import { ListUserReceiveComplimentsService } from '../services/Compliment/ListUserReceiveComplimentsService';
 import { ListUserSendComplimentsService } from '../services/Compliment/ListUserSendComplimentsService';
@@ -72,9 +73,33 @@ export class ComplimentController {
     
     const complimentService = new UpdateComplimentService(complimentsRepository, tagsRepository);
     
-    const updatedCompliment = await complimentService.execute({ id, tag_id, message, user_id });
-    if (!updatedCompliment) return res.status(404).json('Compliment doesnt exist');
+    try {
+      const updatedCompliment = await complimentService.execute({ id, tag_id, message, user_id });
+      if (!updatedCompliment) return res.status(404).json('Compliment doesnt exist');
+  
+      return res.status(200).json(updatedCompliment);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
+  }
 
-    return res.status(200).json(updatedCompliment);
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    const { user_id } = req;
+    
+    if(!id) return res.status(400).json('Empty compliment id value');
+    
+    const complimentService = new DeleteComplimentService(complimentsRepository);
+    
+    try {
+      const deletedCompliment = await complimentService.execute({ id, user_id });
+      if (!deletedCompliment) return res.status(404).json('Compliment doesnt exist');
+  
+      return res.status(200).json(deletedCompliment);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 }
