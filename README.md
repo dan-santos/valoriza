@@ -39,9 +39,9 @@
 
   [x] Deixar de user parametro Partial<T> na camada de service e usar interface no lugar
 
-  [-] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
+  [x] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
 
-  [ ] Mudar SQLite para postgres
+  [x] Mudar SQLite para postgres
   
   [ ] Testes com vitest
 
