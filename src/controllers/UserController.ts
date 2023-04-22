@@ -56,18 +56,24 @@ export class UserController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
+    const { user_id } = req;
     const { name, email, admin } = req.body;
     
-    if(!name || !id || !email || !(typeof admin === 'boolean')) {
-      return res.status(400).json('Empty user name, email, admin or id value');
+    if(!user_id || !name || !id || !email || !(typeof admin === 'boolean')) {
+      return res.status(400).json('Empty user_id or user name, email, admin or id value');
     }
-    
+
     const userService = new UpdateUserService(usersRepository);
     
-    const updatedUser = await userService.execute({ id, name, email, admin });
-    if (!updatedUser) return res.status(404).json('User doesnt exist');
-
-    return res.status(200).json(updatedUser);
+    try {
+      const updatedUser = await userService.execute({ id, name, email, admin, user_id });
+      if (!updatedUser) return res.status(404).json('User doesnt exist');
+  
+      return res.status(200).json(updatedUser);
+    } catch (e) {
+      const err = e as CustomError;
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 
   async delete(req: Request, res: Response) {
