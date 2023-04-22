@@ -37,11 +37,11 @@ model Tag {
 model Compliment {
   id            String   @id @default(uuid())
   user_sender   String
-  sender        User     @relation(fields: [user_sender], references: [id], name: "sender")
+  sender        User     @relation(fields: [user_sender], references: [id], name: "sender", onDelete: Cascade, onUpdate: Cascade)
   user_receiver String
-  receiver      User     @relation(fields: [user_receiver], references: [id], name: "receiver")
-  tag_id        String
-  tag           Tag      @relation(fields: [tag_id], references: [id])
+  receiver      User     @relation(fields: [user_receiver], references: [id], name: "receiver", onDelete: Cascade, onUpdate: Cascade)
+  tag_id        String?
+  tag           Tag?     @relation(fields: [tag_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
   message       String
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now())
