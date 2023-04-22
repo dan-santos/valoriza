@@ -33,13 +33,13 @@
 
   [x] Somente usuários autores (senders) de compliments podem deletar ou editar elas
 
-  [-] Users podem ser deletados ou editados por admins ou por eles próprios
+  [x] Users podem ser deletados ou editados por admins ou por eles próprios
 
   [x] Usuários devem ser por padrão criados com o admin=false
 
-  [ ] Deixar de user parametro Partial<T> na camada de service e usar interface no lugar
+  [x] Deixar de user parametro Partial<T> na camada de service e usar interface no lugar
 
-  [ ] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
+  [-] Alterar tabela e colocar a flag @OnDelete e @OnUpdate na tabela de compliments, users e tags
 
   [ ] Mudar SQLite para postgres
   
