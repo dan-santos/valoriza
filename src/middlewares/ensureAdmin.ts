@@ -10,9 +10,9 @@ export async function ensureAdmin(req: Request, res: Response, next: NextFunctio
   const usersRepository = new UsersRepository();
   const findUserService = new FindUserService(usersRepository);
 
-  const { admin } = await findUserService.execute({ id: user_id });
+  const user = await findUserService.execute({ id: user_id });
 
-  if (!admin) return res.status(403).json('User not enough privileges');
+  if (!user || !user.admin) return res.status(403).json('User not enough privileges');
   
   return next();
 }
