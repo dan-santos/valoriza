@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --reporter verbose",
+    "coverage": "vitest run --coverage",
     "prisma:local": "export $(cat .local.env | xargs) && npx prisma studio",
     "migrate:local": "export $(cat .local.env | xargs) && npx prisma migrate dev",
-    "start:dev": "export $(cat .dev.env | xargs) && ts-node-dev --transpile-only --respawn --exit-child --ignore-watch node_modules ./src/server.ts",
+    "start:dev": "vitest --reporter verbose --run && export $(cat .dev.env | xargs) && ts-node-dev --transpile-only --respawn --exit-child --ignore-watch node_modules ./src/server.ts",
     "start:local": "export $(cat .local.env | xargs) && ts-node-dev --transpile-only --respawn --exit-child --ignore-watch node_modules ./src/server.ts"
   },
   "keywords": [],

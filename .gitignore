@@ -137,3 +137,6 @@ dist
 # Prisma
 prisma/database
 prisma/migrations
+
+# Temp files
+tmp/
