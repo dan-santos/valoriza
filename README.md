@@ -43,7 +43,7 @@
 
   [x] Mudar SQLite para postgres
   
-  [ ] Testes com vitest
+  [-] Testes com vitest
 
   [ ] Logger para requisições
 
