@@ -1,5 +1,5 @@
-import { Tag } from '../../src/entities/Tag';
-import { ITagRepository } from '../../src/repositories/Tag/TagsRepository.interface';
+import { Tag } from '../../entities/Tag';
+import { ITagRepository } from '../../repositories/Tag/TagsRepository.interface';
 
 class InMemoryTagsRepository implements ITagRepository {
 

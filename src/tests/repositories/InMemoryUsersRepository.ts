@@ -1,5 +1,5 @@
-import { User } from '../../src/entities/User';
-import { IUserRepository } from '../../src/repositories/User/UsersRepository.interface';
+import { User } from '../../entities/User';
+import { IUserRepository } from '../../repositories/User/UsersRepository.interface';
 
 class InMemoryUsersRepository implements IUserRepository {
 
