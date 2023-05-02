@@ -27,7 +27,7 @@ describe('When delete tag service is called', () => {
     expect(async () => {await deleteTagService.execute(mockedId);}).rejects.toThrow(BadRequestError);
   });
 
-  it('should return 404 Error if tag is successfully deleted', async () => {
+  it('should return 404 Error if tag is not found', async () => {
     const inMemoryTagsRepository = new InMemoryTagsRepository();
     const idOfInexistentTag = '0';
     const deleteTagService = new DeleteTagService(inMemoryTagsRepository);

@@ -40,9 +40,11 @@ class InMemoryTagsRepository implements ITagRepository {
     tag.updated_at = new Date();
 
     const tagIndex = this.tags.findIndex((elem) => elem.id === tag.id);
-    this.tags[tagIndex] = tag as Tag;
+    const foundTag = this.tags[tagIndex];
+    foundTag.name = tag.name;
+    foundTag.updated_at = tag.updated_at;
 
-    return Promise.resolve(tag as Tag);
+    return Promise.resolve(foundTag);
   }
 
   delete(id: string): Promise<Tag> {

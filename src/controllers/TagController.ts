@@ -31,7 +31,7 @@ export class TagController {
 
     const tagService = new GetTagsService(tagsRepository);
 
-    const tags = await tagService.execute({ take });
+    const tags = await tagService.execute(take);
 
     return res.status(200).json(tags);
   }
