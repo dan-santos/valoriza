@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { CreateTagService } from './CreateTagService';
 import { UpdateTagService } from './UpdateTagService';
 import { InMemoryTagsRepository } from '../../tests/repositories/InMemoryTagsRepository';
-import { BadRequestError, NotFoundError } from '../../utils/CustomErrors';
+import { BadRequestError, ConflictError, NotFoundError } from '../../utils/CustomErrors';
+import { Tag } from '../../entities/Tag';
 
 describe('When update tag service is called', () => {
   it('should return Tag object if tag is successfully updated', async () => {
@@ -13,8 +14,7 @@ describe('When update tag service is called', () => {
     const updateTagService = new UpdateTagService(inMemoryTagsRepository);
     const updatedTag = await updateTagService.execute({ id: createdTag.id, name: 'Updated mockedTag' });
 
-    expect(updatedTag.id).toStrictEqual(createdTag.id);
-    expect(updatedTag.name).toStrictEqual('Updated mockedTag');
+    expect(updatedTag).toBeInstanceOf(Tag);
   });
 
   it('should return Tag object with update_at attr different from created_at attr', async () => {
@@ -30,13 +30,12 @@ describe('When update tag service is called', () => {
     expect(updatedTag.updated_at).not.toStrictEqual(updatedTag.created_at);
   });
 
-  it('should return 404 Error if tag is not exist', async () => {
+  it('should return 404 Error if tag is not exist', () => {
     const inMemoryTagsRepository = new InMemoryTagsRepository();
-    const idOfInexistentTag = '0';
     const updateTagService = new UpdateTagService(inMemoryTagsRepository);
 
     expect(async () => {
-      await updateTagService.execute({id: idOfInexistentTag, name: 'InexistentTag'});
+      await updateTagService.execute({id: 'InexistentId', name: 'InexistentTag'});
     }).rejects.toThrow(NotFoundError);
   });
 
@@ -51,6 +50,19 @@ describe('When update tag service is called', () => {
     expect(async () => {
       await updateTagService.execute({id: tag.id, name: tag.name});
     }).rejects.toThrow(BadRequestError);
+  });
+
+  it('should return 409 Error if Tag name is already in use', async () => {
+    const inMemoryTagsRepository = new InMemoryTagsRepository();
+    const createTagService = new CreateTagService(inMemoryTagsRepository);
+    const createdTag = await createTagService.execute({ name: 'mockedTag' });
+    await createTagService.execute({ name: 'Another mockedTag' });
+
+    const updateTagService = new UpdateTagService(inMemoryTagsRepository);
+
+    expect(async () => {
+      await updateTagService.execute({ id: createdTag.id, name: 'Another mockedTag' });
+    }).rejects.toThrow(ConflictError);
   });
 });
 

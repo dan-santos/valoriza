@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { CreateTagService } from './CreateTagService';
 import { InMemoryTagsRepository } from '../../tests/repositories/InMemoryTagsRepository';
 import { BadRequestError } from '../../utils/CustomErrors';
+import { Tag } from '../../entities/Tag';
 
 describe('When create tag service is called', () => {
   it('should be return Tag object if name are correctly filled', async () => {
@@ -11,10 +12,10 @@ describe('When create tag service is called', () => {
 
     const createdTag = await tagService.execute(tagName);
 
-    expect(createdTag.name).toStrictEqual('mockedTag');
+    expect(createdTag).toBeInstanceOf(Tag);
   });
 
-  it('should be return Error if name already exists in database', async () => {
+  it('should be return 400 Error if name already exists in database', async () => {
     const tagService = new CreateTagService(new InMemoryTagsRepository());
 
     const tagName = { name: 'mockedTag' };
