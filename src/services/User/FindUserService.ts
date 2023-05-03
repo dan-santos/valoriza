@@ -1,6 +1,6 @@
 import { User } from '../../entities/User';
 import { IUserRepository } from '../../repositories/User/UsersRepository.interface';
-import { BadRequestError } from '../../utils/CustomErrors';
+import { BadRequestError, NotFoundError } from '../../utils/CustomErrors';
 
 interface IUserRequestDTO {
   id?: string;
@@ -22,7 +22,7 @@ class FindUserService {
     } else {
       user = await this.usersRepository.findById(id);
     }
-
+    if (!user) throw new NotFoundError('The user is not exist in database');
     return user;
   }
 }

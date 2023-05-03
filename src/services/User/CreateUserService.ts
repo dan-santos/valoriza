@@ -16,7 +16,9 @@ class CreateUserService {
   ){}
 
   async execute({ name, email, admin = false, password }: IUserRequestDTO) {    
-    if(!email) throw new BadRequestError('Empty email value');
+    if(!name || !email || !(typeof admin === 'boolean') || !password) {
+      throw new BadRequestError('Empty name, email, admin or password value');
+    }
     
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
     if (userAlreadyExists) throw new BadRequestError('User already exists');

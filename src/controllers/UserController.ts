@@ -49,7 +49,7 @@ export class UserController {
 
     const userService = new GetUsersService(usersRepository);
 
-    const users = await userService.execute({ take });
+    const users = await userService.execute(take);
 
     return res.status(200).json(users);
   }

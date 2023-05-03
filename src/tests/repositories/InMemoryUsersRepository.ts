@@ -42,9 +42,13 @@ class InMemoryUsersRepository implements IUserRepository {
     user.updated_at = new Date();
 
     const userIndex = this.users.findIndex((elem) => elem.id === user.id);
-    this.users[userIndex] = user as User;
+    const foundUser = this.users[userIndex];
+    foundUser.name = user.name;
+    foundUser.email = user.email;
+    foundUser.admin = user.admin ? user.admin : foundUser.admin;
+    foundUser.updated_at = user.updated_at;
 
-    return Promise.resolve(user as User);
+    return Promise.resolve(foundUser);
   }
   delete(id: string): Promise<User> {
     const userIndex = this.users.findIndex((elem) => elem.id === id);
