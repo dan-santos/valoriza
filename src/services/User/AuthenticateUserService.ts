@@ -1,5 +1,5 @@
 import { IUserRepository } from '../../repositories/User/UsersRepository.interface';
-import { UnauthorizedError } from '../../utils/CustomErrors';
+import { BadRequestError, UnauthorizedError } from '../../utils/CustomErrors';
 import { compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { config } from '../../config';
@@ -14,6 +14,8 @@ class AuthenticateUserService {
     private usersRepository: IUserRepository
   ){}
   async execute({ email, password }: IAuthenticateRequestDTO) {
+    if(!email || !password) throw new BadRequestError('email and password cannot be empty/null');
+
     const user = await this.usersRepository.findByEmail(email);
     if (!user) throw new UnauthorizedError('Incorrect email or password');
 
