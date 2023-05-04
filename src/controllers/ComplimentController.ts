@@ -21,7 +21,8 @@ export class ComplimentController {
 
     const complimentService = new CreateComplimentService(
       complimentsRepository,
-      usersRepository
+      usersRepository,
+      tagsRepository
     );
 
     try {

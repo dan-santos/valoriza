@@ -1,6 +1,7 @@
 import { IComplimentRepository } from '../../repositories/Compliment/ComplimentsRepository.interface';
+import { ITagRepository } from '../../repositories/Tag/TagsRepository.interface';
 import { IUserRepository } from '../../repositories/User/UsersRepository.interface';
-import { BadRequestError } from '../../utils/CustomErrors';
+import { BadRequestError, ForbiddenError, NotFoundError } from '../../utils/CustomErrors';
 
 interface IComplimentRequestDTO {
   tag_id: string;
@@ -12,15 +13,23 @@ interface IComplimentRequestDTO {
 class CreateComplimentService {
   constructor(
     private complimentsRespository: IComplimentRepository,
-    private usersRepository: IUserRepository
+    private usersRepository: IUserRepository,
+    private tagsRepository: ITagRepository
   ){}
 
   async execute({ tag_id, user_sender, user_receiver, message }: IComplimentRequestDTO) {
-    if (user_sender === user_receiver) throw new BadRequestError('You cannot send compliment to yourself');
+    if (!tag_id || !user_sender || !user_receiver || !message) {
+      throw new BadRequestError('tag, user, receiver or message cannot be empty/null');
+    }
+
+    if (user_sender === user_receiver) throw new ForbiddenError('You cannot send compliment to yourself');
     
-    // if user is able to trigger this request, then, sender is already verified and authenticated
-    const receiver = this.usersRepository.findById(user_receiver);
-    if (!receiver) throw new BadRequestError('User receiver doesnt exists');
+    const receiver = await this.usersRepository.findById(user_receiver);
+    if (!receiver) throw new NotFoundError('User receiver doesnt exists');
+    const sender = await this.usersRepository.findById(user_sender);
+    if (!sender) throw new NotFoundError('User sender doesnt exists');
+    const tag = await this.tagsRepository.findById(tag_id);
+    if (!tag) throw new NotFoundError('Tag doesnt exists');
 
     const compliment = this.complimentsRespository.create({
       tag_id,

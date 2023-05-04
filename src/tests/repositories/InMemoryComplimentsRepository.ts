@@ -47,9 +47,13 @@ class InMemoryComplimentsRepository implements IComplimentRepository {
     compliment.updated_at = new Date();
 
     const complimentIndex = this.compliments.findIndex((elem) => elem.id === compliment.id);
-    this.compliments[complimentIndex] = compliment as Compliment;
+    const foundCompliment = this.compliments[complimentIndex];
+    foundCompliment.message = compliment.message;
+    foundCompliment.tag_id = compliment.tag_id;
+    foundCompliment.user_receiver = compliment.user_receiver;
+    foundCompliment.updated_at = compliment.updated_at;
 
-    return Promise.resolve(compliment as Compliment);
+    return Promise.resolve(foundCompliment);
   }
 
   delete(id: string): Promise<Compliment> {
