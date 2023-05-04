@@ -48,8 +48,8 @@ jobs:
       - name: Creating env file
         run: |
           touch .env
-          echo "${{ JSONWEBTOKEN_KEY }}" >> .env
-          echo "${{ JSONWEBTOKEN_TTL }}" >> .env
+          echo "${{ env.JSONWEBTOKEN_KEY }}" > .env
+          echo "${{ env.JSONWEBTOKEN_TTL }}" > .env
           cat .env
         env:
           JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
