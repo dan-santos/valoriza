@@ -10,8 +10,8 @@ on:
     branches: [ "main" ]
     
 env:
-  JSONWEBTOKEN_KEY: ${{ vars.JSONWEBTOKEN_KEY }}
-  JSONWEBTOKEN_TTL: ${{ vars.JSONWEBTOKEN_TTL }}
+  JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
+  JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
   
 jobs:
   build:
