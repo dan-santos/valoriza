@@ -45,13 +45,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           
-      - name: Create .env file
+      - name: Run tests with vitest
         run: |
-          touch .env
-          cat ${{ secrets.JSONWEBTOKEN_TTL }}
-          echo "JSONWEBTOKEN_KEY=teste" > .env
-          echo "JSONWEBTOKEN_TTL=${{ secrets.JSONWEBTOKEN_TTL }}" > .env
-          cat .env
-                  
-      - run: npm ci
-      - run: npm run test
+          npm ci
+          npm run test
+        env:
+          JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
+          JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
