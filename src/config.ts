@@ -8,7 +8,7 @@ export const config = {
     url: process.env.DATABASE_URL
   },
   jsonwebtoken: {
-    key: process.env.JSONWEBTOKEN_KEY || 'anykey',
-    ttl: process.env.JSONWEBTOKEN_TTL || '1h',
+    key: process.env.JSONWEBTOKEN_KEY,
+    ttl: process.env.JSONWEBTOKEN_TTL,
   }
 };
