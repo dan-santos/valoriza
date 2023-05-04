@@ -30,8 +30,8 @@ jobs:
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1
         with:
-          JSONWEBTOKEN_KEY: ${{ vars.JSONWEBTOKEN_KEY }}
-          JSONWEBTOKEN_TTL: ${{ vars.JSONWEBTOKEN_TTL }}
+          JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
+          JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
           
       - run: npm ci
       - run: npm run build --if-present
