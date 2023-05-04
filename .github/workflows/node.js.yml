@@ -29,9 +29,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
-      - run: npm ci
-      - run: npm run build --if-present
+      - run: |
+          echo "JSONWEBTOKEN_KEY : $JSONWEBTOKEN_KEY"
+          echo "JSONWEBTOKEN_TTL : $JSONWEBTOKEN_TTL"
+          npm ci
+          npm run build --if-present
       
   tests:
     runs-on: ubuntu-latest
@@ -49,5 +51,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
                   
-      - run: npm ci
-      - run: npm run test
+      - run: |
+          echo "JSONWEBTOKEN_KEY : $JSONWEBTOKEN_KEY"
+          echo "JSONWEBTOKEN_TTL : $JSONWEBTOKEN_TTL"
+          npm ci
+          npm run test
