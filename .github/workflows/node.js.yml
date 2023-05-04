@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,16 +25,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          
-      - name: Creating env file
-        run: |
-          touch .env
-          echo "${{ secrets.JSONWEBTOKEN_KEY }}" >> .env
-          echo "${{ secrets.JSONWEBTOKEN_TTL }}" >> .env
-          cat .env
-        env:
-          JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
-          JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
           
       - run: npm ci
       - run: npm run build --if-present
@@ -58,8 +48,8 @@ jobs:
       - name: Creating env file
         run: |
           touch .env
-          echo "${{ secrets.JSONWEBTOKEN_KEY }}" >> .env
-          echo "${{ secrets.JSONWEBTOKEN_TTL }}" >> .env
+          echo "${{ JSONWEBTOKEN_KEY }}" > .env
+          echo "${{ JSONWEBTOKEN_TTL }}" > .env
           cat .env
         env:
           JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
