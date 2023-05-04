@@ -45,15 +45,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           
-      - name: Creating env file
-        run: |
-          touch .env
-          echo "${{ env.JSONWEBTOKEN_KEY }}" > .env
-          echo "${{ env.JSONWEBTOKEN_TTL }}" > .env
-          cat .env
-        env:
-          JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
-          JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
+      - name: Create .env file
+        # You may pin to the exact commit or the version.
+        # uses: SpicyPizza/create-envfile@a8e32e193370fc80ac4d090ac674b4ae101dc97d
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
+          envkey_JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
                   
       - run: npm ci
       - run: npm run test
