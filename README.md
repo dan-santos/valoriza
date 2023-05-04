@@ -1,3 +1,4 @@
+[![Node.js CI](https://github.com/dan-santos/valoriza/actions/workflows/node.js.yml/badge.svg)](https://github.com/dan-santos/valoriza/actions/workflows/node.js.yml)
 ## Regras
 - Cadastro de usuário
 
