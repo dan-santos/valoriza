@@ -57,7 +57,7 @@ describe('When DeleteUserService is called', () => {
     const deleteUserService = new DeleteUserService(inMemoryUsersRepository);
 
     expect(
-      async () => {await deleteUserService.execute({id: user.id, user_id: user.user_id});}
+      async () => {await deleteUserService.execute({...user});}
     ).rejects.toThrow(BadRequestError);
   });
 

@@ -66,10 +66,7 @@ describe('When create compliment service is called', async () => {
 
     expect(async() => {
       await createComplimentService.execute({ 
-        tag_id: compliment.tag_id, 
-        user_sender: compliment.user_sender, 
-        user_receiver: compliment.user_receiver, 
-        message: compliment.message
+        ...compliment
       });
     }).rejects.toThrow(BadRequestError);
   });

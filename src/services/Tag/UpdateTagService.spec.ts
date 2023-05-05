@@ -48,7 +48,7 @@ describe('When update tag service is called', () => {
     const updateTagService = new UpdateTagService(inMemoryTagsRepository);
 
     expect(async () => {
-      await updateTagService.execute({id: tag.id, name: tag.name});
+      await updateTagService.execute({...tag});
     }).rejects.toThrow(BadRequestError);
   });
 

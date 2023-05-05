@@ -83,7 +83,7 @@ describe('When delete compliment service is called', () => {
     const deleteComplimentService = new DeleteComplimentService(inMemoryComplimentsRepository, inMemoryUsersRepository);
 
     expect(async() => {
-      await deleteComplimentService.execute({ id: data.id, user_id: data.user_id });
+      await deleteComplimentService.execute({ ...data });
     }).rejects.toThrow(BadRequestError);
   });
 

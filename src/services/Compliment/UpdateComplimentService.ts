@@ -1,6 +1,6 @@
 import { IComplimentRepository } from '../../repositories/Compliment/ComplimentsRepository.interface';
 import { ITagRepository } from '../../repositories/Tag/TagsRepository.interface';
-import { BadRequestError, ForbiddenError } from '../../utils/CustomErrors';
+import { BadRequestError, ForbiddenError, NotFoundError } from '../../utils/CustomErrors';
 
 interface IComplimentRequestDTO {
   id: string;
@@ -17,14 +17,21 @@ class UpdateComplimentService {
   ){}
 
   async execute({ id, tag_id, user_id, message }: IComplimentRequestDTO) {
+    if (!id || !tag_id || !user_id || !message) {
+      throw new BadRequestError('id, tag_id, user_id or message cannot be empty/null');
+    }
 
-    const { user_sender } = await this.complimentsRepository.findById(id);
+    const toBeUpdatedCompliment = await this.complimentsRepository.findById(id);
 
-    if (user_sender !== user_id) throw new ForbiddenError('You cannot update a compliment that you arent author');
+    if (!toBeUpdatedCompliment) throw new NotFoundError('Compliment doesnt exists');
+
+    if (toBeUpdatedCompliment.user_sender !== user_id){
+      throw new ForbiddenError('You cannot update a compliment that you arent author');
+    }
 
     const refferedTag = await this.tagsRepository.findById(tag_id);
 
-    if (!refferedTag) throw new BadRequestError('The reffered tag doesnt exists');
+    if (!refferedTag) throw new NotFoundError('The reffered tag doesnt exists');
 
     const updatedCompliment = await this.complimentsRepository.update({ id, tag_id, message });
 

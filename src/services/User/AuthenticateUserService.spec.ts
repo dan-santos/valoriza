@@ -27,7 +27,7 @@ describe('When authentication service is called', () => {
     const authService = new AuthenticateUserService(inMemoryUsersRepository);
     
     expect(async () => {
-      await authService.execute({ email: user.email, password: user.password });
+      await authService.execute({ ...user });
     }).rejects.toThrow(BadRequestError);
   });
 
