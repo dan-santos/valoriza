@@ -39,7 +39,7 @@ class InMemoryComplimentsRepository implements IComplimentRepository {
   }
 
   findBySender(user_id: string): Promise<Compliment[]> {
-    const compliments = this.compliments.filter((elem) => elem.user_receiver === user_id);
+    const compliments = this.compliments.filter((elem) => elem.user_sender === user_id);
     return Promise.resolve(compliments);
   }
   
