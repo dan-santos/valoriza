@@ -32,7 +32,9 @@
 
   [x] Somente Admins podem criar, deletar ou editar tags
 
-  [x] Somente usuários autores (senders) de compliments podem deletar ou editar elas
+  [x] Somente usuários autores (senders) de compliments podem editar elas
+
+  [x] Somente usuários autores (senders) ou admins de compliments podem deletar elas
 
   [x] Users podem ser deletados ou editados por admins ou por eles próprios
 
