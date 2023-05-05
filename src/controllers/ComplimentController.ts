@@ -60,7 +60,7 @@ export class ComplimentController {
 
     const complimentService = new GetComplimentsService(complimentsRepository);
 
-    const compliments = await complimentService.execute({ take });
+    const compliments = await complimentService.execute(take);
 
     return res.status(200).json(compliments);
   }
@@ -91,7 +91,7 @@ export class ComplimentController {
     
     if(!id) return res.status(400).json('Empty compliment id value');
     
-    const complimentService = new DeleteComplimentService(complimentsRepository);
+    const complimentService = new DeleteComplimentService(complimentsRepository, usersRepository);
     
     try {
       const deletedCompliment = await complimentService.execute({ id, user_id });
