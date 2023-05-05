@@ -49,7 +49,7 @@ describe('When update user service is called', () => {
       name: 'john', email: 'john@mail.com', admin: false, password: '123' 
     });
 
-    await delay(1);
+    await delay(10);
 
     const updateUserService = new UpdateUserService(inMemoryUsersRepository);
     const updatedUser = await updateUserService.execute({ 

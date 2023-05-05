@@ -22,7 +22,7 @@ describe('When update tag service is called', () => {
     const createTagService = new CreateTagService(inMemoryTagsRepository);
     const createdTag = await createTagService.execute({ name: 'mockedTag' });
 
-    await delay(1);
+    await delay(10);
 
     const updateTagService = new UpdateTagService(inMemoryTagsRepository);
     const updatedTag = await updateTagService.execute({ ...createdTag, name: 'Updated mockedTag' });
