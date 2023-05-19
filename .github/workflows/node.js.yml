@@ -30,7 +30,7 @@ jobs:
       - name: Run tests with vitest
         run: |
           npm ci
-          npm run test
+          npm run test:unit
         env:
           JSONWEBTOKEN_TTL: ${{ secrets.JSONWEBTOKEN_TTL }}
           JSONWEBTOKEN_KEY: ${{ secrets.JSONWEBTOKEN_KEY }}
