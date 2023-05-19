@@ -4,7 +4,7 @@ import { AuthenticateUserService } from '../services/User/AuthenticateUserServic
 import { CreateUserService } from '../services/User/CreateUserService';
 
 // this function are used in E2E tests
-export async function getAdminToken(usersRepository: IUserRepository): Promise<string> {
+export async function getAdminTokenAndId(usersRepository: IUserRepository) {
   const adminModel = new User({ name: 'AdminTestUser', email: 'admin@test.com', admin: true, password: '123' });
   const createUserService = new CreateUserService(usersRepository);
 
@@ -13,11 +13,11 @@ export async function getAdminToken(usersRepository: IUserRepository): Promise<s
   const authService = new AuthenticateUserService(usersRepository);
   const bearerToken = await authService.execute({ email: admin.email, password: adminModel.password });
 
-  return bearerToken;
+  return { token: bearerToken, id: admin.id };
 }
 
 // this function are used in E2E tests
-export async function getCommonToken(usersRepository: IUserRepository): Promise<string> {
+export async function getCommonToken(usersRepository: IUserRepository){
   const userModel = new User({ name: 'CommonTestUser', email: 'common@test.com', password: '123' });
   const createUserService = new CreateUserService(usersRepository);
 
@@ -26,5 +26,5 @@ export async function getCommonToken(usersRepository: IUserRepository): Promise<
   const authService = new AuthenticateUserService(usersRepository);
   const bearerToken = await authService.execute({ email: user.email, password: userModel.password });
 
-  return bearerToken;
+  return { token: bearerToken, id: user.id };
 }
