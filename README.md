@@ -46,9 +46,11 @@
 
   [x] Mudar SQLite para postgres
   
-  [-] Testes com vitest
+  [x] Testes unitários com vitest
 
-  [ ] Logger para requisições
+  [-] Testes de integração com prisma + vitest
+
+  [ ] Logger para requisições (morgan)
 
   [ ] Ocultar senha de usuários nas respostas do servidor
 

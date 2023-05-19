@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --reporter verbose",
+    "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "npm link vitest-environment-prisma",
+    "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
+    "test:e2e": "vitest -c vitest.e2e.config.ts --reporter verbose",
+    "test:unit": "vitest -c vitest.unit.config.ts --reporter verbose",
     "coverage": "vitest run --coverage",
     "prisma:studio": "npx prisma studio",
     "prisma:migrate": "npx prisma migrate dev",
@@ -31,9 +35,10 @@
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "eslint": "^8.37.0",
+    "npm-run-all": "^4.1.5",
     "prisma": "^4.12.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.3",
-    "vitest": "^0.29.8"
+    "vitest": "^0.31.1"
   }
 }
