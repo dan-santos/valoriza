@@ -1,30 +1,30 @@
 import { describe, it, expect } from 'vitest';
-import { app } from '../../../server';
+import { session } from '../../../server';
 import request from 'supertest';
 import { getAdminTokenAndId } from '../../../utils/GetValidBearerToken';
 import { UsersRepository } from '../../../repositories/User/UsersRepository';
-import { Tag } from '../../../entities/Tag';
+import { User } from '../../../entities/User';
 
-describe('[E2E] Testing all tags related endpoints', async () => {
+describe('[E2E] Testing all users related endpoints', async () => {
 
-  const baseURL = '/tags';
+  const baseURL = '/users';
   const successStatusCode = 200;
-  const { token } = await getAdminTokenAndId(new UsersRepository);
-  const payload: Partial<Tag> = { name: 'CreatedTag' };
-  let createdTag: Tag;
+  const { token, id } = await getAdminTokenAndId(new UsersRepository);
+  const payload: Partial<User> = { name: 'CreatedUser', email: 'user.e2e@mail.com', password: '123' };
+  let createdUser: User;
 
   it('CREATE', async () => {
-    const response = await request(app)
+    const response = await request(session)
       .post(baseURL)
       .set('Authorization', `Bearer ${token}`)
       .send(payload);
 
-    createdTag = response.body as Tag;
+    createdUser = response.body as User;
     expect(response.statusCode).toStrictEqual(successStatusCode);
   });
 
   it('GET', async () => {
-    const response = await request(app)
+    const response = await request(session)
       .get(baseURL)
       .set('Authorization', `Bearer ${token}`)
       .send();
@@ -33,20 +33,21 @@ describe('[E2E] Testing all tags related endpoints', async () => {
   });
 
   it('PUT', async () => {
-    createdTag.name = 'UpdatedTag';
+    createdUser.name = 'UpdatedUser';
 
-    const response = await request(app)
-      .put(`${baseURL}/${createdTag.id}`)
+    const response = await request(session)
+      .put(`${baseURL}/${createdUser.id}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(createdTag);
+      .send(createdUser);
 
     expect(response.statusCode).toStrictEqual(successStatusCode);
   });
 
   it('DELETE', async () => {
-    const response = await request(app)
-      .delete(`${baseURL}/${createdTag.id}`)
+    const response = await request(session)
+      .delete(`${baseURL}/${createdUser.id}`)
       .set('Authorization', `Bearer ${token}`)
+      .set({user_id: id})
       .send();
 
     expect(response.statusCode).toStrictEqual(successStatusCode);

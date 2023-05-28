@@ -48,10 +48,8 @@
   
   [x] Testes unitários com vitest
 
-  [-] Testes de integração com prisma + vitest
+  [x] Testes de integração com prisma + vitest
 
-  [ ] Logger para requisições (morgan)
-
-  [ ] Ocultar senha de usuários nas respostas do servidor
+  [x] Logger para requisições (morgan)
 
   [ ] Subir na nuvem

@@ -1,3 +1,4 @@
+import { User } from '../../entities/User';
 import { IUserRepository } from '../../repositories/User/UsersRepository.interface';
 import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from '../../utils/CustomErrors';
 
@@ -21,10 +22,14 @@ class UpdateUserService {
     const userRequester = await this.usersRepository.findById(user_id);
     if (!userRequester) throw new NotFoundError('User requester not found in database');
 
-    let updatedUser;
+    let updatedUser: User;
 
-    const userWithSameEmail = await this.usersRepository.findByEmail(email);
-    if (userWithSameEmail) throw new ConflictError(`The email "${email}" is already in use`);
+    const toBeUpdatedUser = await this.usersRepository.findById(id);
+
+    if (toBeUpdatedUser.email !== email) {
+      const userWithSameEmail = await this.usersRepository.findByEmail(email);
+      if (userWithSameEmail) throw new ConflictError(`The email "${email}" is already in use`);
+    }
 
     // if the requested is admin, he can change admin property of user
     if (userRequester.admin) {
