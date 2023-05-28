@@ -52,4 +52,4 @@
 
   [x] Logger para requisições (morgan)
 
-  [ ] Subir na nuvem
+  [x] Subir na nuvem
