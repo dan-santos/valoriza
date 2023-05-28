@@ -57,7 +57,9 @@ jobs:
       
   deploy:
     runs-on: ubuntu-latest
+    environment: prod
     needs: build
+    
     steps:
       - name: 'Azure Login'
         uses: Azure/login@v1
